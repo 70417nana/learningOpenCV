@@ -3,19 +3,28 @@ import numpy as np
 
 from matplotlib import pyplot as plt
 
-img = cv2.imread('C:\\Users\\na-31\\Pictures\\Huawei_novalite3\\photos\\mobilephone\\IMG_20201013_200936.jpg',0)
-ret,thresh1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
-ret,thresh2 = cv2.threshold(img,127,255,cv2.THRESH_BINARY_INV)
-ret,thresh3 = cv2.threshold(img,200,255,cv2.THRESH_TRUNC)
-ret,thresh4 = cv2.threshold(img,127,255,cv2.THRESH_TOZERO)
-ret,thresh5 = cv2.threshold(img,127,255,cv2.THRESH_TOZERO_INV)
+# function(nothing to do)
+def nothing(x):
+    pass
 
-titles = ['Original Image','BINARY','BINARY_INV','TRUNC','TOZERO','TOZERO_INV']
-images = [img, thresh1, thresh2, thresh3, thresh4, thresh5]
+#import image
+img = cv2.imread('C:\\Users\\na-31\\Desktop\\2dan.jpg',0)
+# #create and get Trackbar position
+# cv2.createTrackbar('hreshold','hreshold',0,255,nothing)
+# thre = cv2.getTrackbarPos('threshold','smoothing')
+#
+# #detect edge
+# edges = cv2.Canny(img,thre,200)
 
-for i in range(6):
-    plt.subplot(2,3,i+1),plt.imshow(images[i],'gray')
-    plt.title(titles[i])
-    plt.xticks([]),plt.yticks([])
+#median
+img = cv2.medianBlur(img,5)
+
+edges = cv2.Canny(img,5,15)
+
+#edge
+plt.subplot(121),plt.imshow(img,cmap = 'gray')
+plt.title('Original Image'), plt.xticks([]), plt.yticks([])
+plt.subplot(122),plt.imshow(edges,cmap = 'gray')
+plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
 
 plt.show()
