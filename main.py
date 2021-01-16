@@ -13,6 +13,9 @@ img = cv2.imread('C:\\Users\\na-31\\Desktop\\2dan.jpg',0)
 cv2.createTrackbar('med_ksize','image',2,10,nothing)
 cv2.createTrackbar('th_min','image',5,255,nothing)
 cv2.createTrackbar('th_max','image',15,255,nothing)
+
+kernel = np.ones((4,2),np.uint8)
+
 beforemed= 5
 before1 = 5
 before2 = 15
@@ -43,13 +46,13 @@ while(1):
 
         #detect edge
         edges = cv2.Canny(img_med,thre1,thre2)
-        mededges = cv2.medianBlur(edges, 1)
-        # edges = cv2.Canny(img,5,15)
+        #remove noise
+        gradient = cv2.morphologyEx(edges, cv2.MORPH_GRADIENT, kernel)
 
         #edge
         plt.subplot(121),plt.imshow(img,cmap = 'gray')
         plt.title('Original Image'), plt.xticks([]), plt.yticks([])
-        plt.subplot(122),plt.imshow(mededges,cmap = 'gray')
+        plt.subplot(122),plt.imshow(gradient,cmap = 'gray')
         plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
 
         plt.show()
